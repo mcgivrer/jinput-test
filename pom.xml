@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.snapgames.bgf.prototypes</groupId>
 	<artifactId>jinput-test</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>JInput Prototype</name>
 	<description>Java Project using the JInput library to detect and use Pads</description>
 	<inceptionYear>2018</inceptionYear>
@@ -54,7 +54,7 @@
 		<connection>scm:git:git@github.com:snapgames/jinput-test.git</connection>
 		<developerConnection>scm:git:git@github.com:snapgames/jinput-test.git</developerConnection>
 		<url>scm:git:https://github.com/snapgames/jinput-test</url>
-		<tag>jinput-test-0.0.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<distributionManagement>
