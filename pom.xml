@@ -1,10 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.snapgames.bgf.prototypes</groupId>
 	<artifactId>jinput-test</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>JInput Prototype</name>
 	<description>Java Project using the JInput library to detect and use Pads</description>
 	<inceptionYear>2018</inceptionYear>
@@ -56,7 +54,7 @@
 		<connection>scm:git:git@github.com:snapgames/jinput-test.git</connection>
 		<developerConnection>scm:git:git@github.com:snapgames/jinput-test.git</developerConnection>
 		<url>scm:git:https://github.com/snapgames/jinput-test</url>
-		<tag>HEAD</tag>
+		<tag>jinput-test-0.0.1</tag>
 	</scm>
 
 	<distributionManagement>
@@ -186,8 +184,7 @@
 					<shadedArtifactAttached>true</shadedArtifactAttached>
 					<shadedClassifierName>shaded</shadedClassifierName>
 					<transformers>
-						<transformer
-							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+						<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 							<mainClass>${project.mainClass}</mainClass>
 						</transformer>
 						<!--transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer"> 
