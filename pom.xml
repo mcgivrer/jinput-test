@@ -7,9 +7,73 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>JInput Prototype</name>
 	<description>Java Project using the JInput library to detect and use Pads</description>
+	<inceptionYear>2018</inceptionYear>
+
+	<organization>
+		<name>SnapGames</name>
+		<url>http://snapgames.fr</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>Frédéric Delorme</name>
+			<email>frederic.delorme@snapgames.fr</email>
+			<url>https://mcgivrer.wordpress.com</url>
+			<organization>SnapGames</organization>
+			<organizationUrl>https://snapgames.fr</organizationUrl>
+			<timezone>Europe/Paris</timezone>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+				<role>utopist</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/snapgames/jinput-test/issues</url>
+	</issueManagement>
+
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/snapgames/jinput-test</url>
+		<notifiers>
+			<notifier>
+				<type>mail</type>
+				<sendOnError>true</sendOnError>
+				<sendOnFailure>true</sendOnFailure>
+				<sendOnSuccess>false</sendOnSuccess>
+				<sendOnWarning>false</sendOnWarning>
+				<configuration>
+					<address>travis-ci@snapgames.fr</address>
+				</configuration>
+			</notifier>
+		</notifiers>
+	</ciManagement>
+
+	<scm>
+		<connection>scm:git:git@github.com:snapgames/jinput-test.git</connection>
+		<developerConnection>scm:git:git@github.com:snapgames/jinput-test.git</developerConnection>
+		<url>scm:git:https://github.com/snapgames/jinput-test</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>bintray</id>
+			<url>https://api.bintray.com/maven/snapgames/jinput-test/jinput-test</url>
+		</repository>
+	</distributionManagement>
+
+
 
 	<properties>
 		<project.java.version>1.8</project.java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.mainClass>fr.snapgames.bgf.prototypes.JFrameWindow</project.mainClass>
 	</properties>
 
 	<dependencies>
@@ -51,6 +115,154 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- Sources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.1</version>
+				<configuration>
+					<encoding>utf-8</encoding>
+					<stylesheet>maven</stylesheet>
+					<overview>${project.basedir}/README.md</overview>
+					<doclet>ch.raffael.doclets.pegdown.PegdownDoclet</doclet>
+					<docletArtifact>
+						<groupId>ch.raffael.pegdown-doclet</groupId>
+						<artifactId>pegdown-doclet</artifactId>
+						<version>1.3</version>
+					</docletArtifact>
+					<useStandardDocletOptions>true</useStandardDocletOptions>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Build the minimalist JAR without dependencies (Normal Edition) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>${mainClass}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<!-- Shaded jar with all dependencies -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<!-- put your configurations here -->
+					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<shadedClassifierName>shaded</shadedClassifierName>
+					<transformers>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+							<mainClass>${project.mainClass}</mainClass>
+						</transformer>
+						<!--transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer"> 
+							<resource>src/main/resources/res</resource> <file>server.properties</file> 
+							</transformer -->
+					</transformers>
+					<!-- end of config -->
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- create a Windows EXE -->
+			<!-- https://github.com/lukaszlenart/launch4j-maven-plugin/blob/master/src/main/resources/README.adoc -->
+			<!-- see http://launch4j.sourceforge.net/ -->
+			<plugin>
+				<groupId>com.akathist.maven.plugins.launch4j</groupId>
+				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>1.7.21</version>
+				<executions>
+					<execution>
+						<id>l4j-clui</id>
+						<phase>package</phase>
+						<goals>
+							<goal>launch4j</goal>
+						</goals>
+						<configuration>
+							<headerType>gui</headerType>
+							<jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
+							<outfile>${project.build.directory}/${project.name}.exe</outfile>
+							<downloadUrl>http://java.com/download</downloadUrl>
+							<classPath>
+								<mainClass>${project.mainClass}</mainClass>
+								<preCp>anything</preCp>
+							</classPath>
+							<icon>src/main/resources/res/app-icon.ico</icon>
+							<jre>
+								<minVersion>1.8.0</minVersion>
+								<jdkPreference>preferJre</jdkPreference>
+							</jre>
+							<versionInfo>
+								<fileVersion>1.0.0.0</fileVersion>
+								<txtFileVersion>${project.version}</txtFileVersion>
+								<fileDescription>${project.name}</fileDescription>
+								<copyright>${project.inceptionYear} - http://snapgames.fr</copyright>
+								<productVersion>1.0.0.0</productVersion>
+								<txtProductVersion>1.0.0.0</txtProductVersion>
+								<productName>${project.name}</productName>
+								<companyName>SnapGames</companyName>
+								<internalName>${project.name}</internalName>
+								<originalFilename>${project.name}.exe</originalFilename>
+							</versionInfo>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Release -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -65,7 +277,7 @@
 				<configuration>
 					<executable>java</executable>
 					<arguments>
-						<mainClass>fr.snapgames.bgf.prototypes.JFrameWindow</mainClass>
+						<mainClass>${project.mainClass}</mainClass>
 						<argument>-classpath</argument>
 						<classpath />
 						<argument>-Djava.library.path=${project.build.directory}/natives</argument>
