@@ -1,5 +1,7 @@
 # JInput-Test
 
+[![Build Status](https://travis-ci.org/SnapGames/jinput-test.svg?branch=develop)](https://travis-ci.org/SnapGames/jinput-test)
+
 This program is a test for the Jinput library intends to read game controller states to integrate with any game.
 
 In this particular test, I implement a specific UI for an XBoxOne controller.
