@@ -250,12 +250,14 @@ public class JFrameWindow extends javax.swing.JFrame {
 	public void setXYAxis(int xPercentage, int yPercentage) {
 		Graphics2D g2d = (Graphics2D) jPanelXYAxis.getGraphics();
 		g2d.clearRect(1, 1, jPanelXYAxis.getWidth() - 2, jPanelXYAxis.getHeight() - 2);
+		g2d.setColor(Color.RED);
 		g2d.fillOval(xPercentage, yPercentage, 10, 10);
 	}
 	
 	public void setRXRYAxis(int rxPercentage, int ryPercentage) {
 		Graphics2D g2d = (Graphics2D) jPanelRXRYAxis.getGraphics();
 		g2d.clearRect(1, 1, jPanelRXRYAxis.getWidth() - 2, jPanelRXRYAxis.getHeight() - 2);
+		g2d.setColor(Color.BLUE);
 		g2d.fillOval(rxPercentage, ryPercentage, 10, 10);
 	}
 	
