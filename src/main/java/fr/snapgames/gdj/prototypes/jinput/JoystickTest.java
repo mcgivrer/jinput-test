@@ -118,7 +118,9 @@ public class JoystickTest {
 				// Buttons
 				if (!component.isAnalog()) {
 
-					if (componentIdentifier.equals(Component.Identifier.Button.A)
+					if (
+							//for Linux compatibility
+							componentIdentifier.equals(Component.Identifier.Button.A)
 							|| componentIdentifier.equals(Component.Identifier.Button.B)
 							|| componentIdentifier.equals(Component.Identifier.Button.X)
 							|| componentIdentifier.equals(Component.Identifier.Button.Y)
@@ -129,7 +131,8 @@ public class JoystickTest {
 							|| componentIdentifier.equals(Component.Identifier.Button.RIGHT_THUMB)
 							|| componentIdentifier.equals(Component.Identifier.Button.LEFT_THUMB3)
 							|| componentIdentifier.equals(Component.Identifier.Button.RIGHT_THUMB3)
-							) {
+							// for windows compatibility !
+							|| componentIdentifier.getName().matches("[0-9]+")) {
 
 						// Is button pressed?
 						boolean isItPressed = true;
@@ -139,6 +142,9 @@ public class JoystickTest {
 						// Button index
 						String buttonIndex;
 						buttonIndex = component.getIdentifier().toString();
+						if(isItPressed) {
+							System.out.println("Digital button Identifier:"+buttonIndex);
+						}
 
 						// Create and add new button to panel.
 						JToggleButton aToggleButton = new JToggleButton(buttonIndex, isItPressed);
